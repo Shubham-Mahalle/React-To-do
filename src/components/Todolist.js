@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import TodoForm from './TodoForm';
 import Todo from './Todo';
+import Doing from './Doing';
+import Done from './Done'
 
 function TodoList() {
   const [todos, setTodos] = useState([]);
-
+  const [doing,setDoing] = useState([]);
+  const [done,setDone] = useState([]);
+  
   const addTodo = todo => {
     if (!todo.text || /^\s*$/.test(todo.text)) {
       return;
@@ -29,7 +33,7 @@ function TodoList() {
 
     setTodos(removedArr);
   };
-
+ 
   const completeTodo = id => {
     let updatedTodos = todos.map(todo => {
       if (todo.id === id) {
@@ -40,16 +44,59 @@ function TodoList() {
     setTodos(updatedTodos);
   };
 
+  const doingTodo = id => {
+    const taskToMove = todos.find(todo => todo.id === id);
+    if (taskToMove) {
+      const newTodos = todos.filter(todo => todo.id !== id);
+      setTodos(newTodos);
+      setDoing([taskToMove, ...doing]);
+    }
+  };
+  const doneTodo = id =>{
+    const taskTOMovedone = todos.find(todo=> todo.id === id);
+    if(taskTOMovedone){
+      const todoDone = todos.filter(todo=> todo.id !== id);
+      setTodos(todoDone);
+      setDone([taskTOMovedone,...done]);
+    }
+  }
   return (
     <>
-      <h1>What's the Plan for Today?</h1>
-      <TodoForm onSubmit={addTodo} />
-      <Todo
-        todos={todos}
+      <div className='container'>
+      <div className="todo-app">
+        <h1>What's the Plan for Today?</h1>
+        <TodoForm onSubmit={addTodo} />
+        <Todo
+          todos={todos}
+          completeTodo={completeTodo}
+          removeTodo={removeTodo}
+          updateTodo={updateTodo}
+          doingTodo={doingTodo}
+          doneTodo={doneTodo}
+        />
+      </div>
+      <div className="todo-app">
+        <h1>Doing...</h1>
+        <Doing 
+        doing={doing}
         completeTodo={completeTodo}
-        removeTodo={removeTodo}
-        updateTodo={updateTodo}
-      />
+          removeTodo={removeTodo}
+          updateTodo={updateTodo}
+          doingTodo={doingTodo}
+          doneTodo={doneTodo} />
+      </div>
+      <div className="todo-app">
+        <h1>Done!!!</h1>
+        <Done 
+        done={done}
+        completeTodo={completeTodo}
+          removeTodo={removeTodo}
+          updateTodo={updateTodo}
+          doingTodo={doingTodo}
+          doneTodo={doneTodo}/>
+      </div>
+ </div>
+      
     </>
   );
 }
