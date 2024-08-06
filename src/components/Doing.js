@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 import TodoForm from './TodoForm';
-import { RiCloseCircleLine } from 'react-icons/ri';
+import { RiCheckDoubleFill } from 'react-icons/ri';
 import { TiEdit } from 'react-icons/ti';
 import { RiArrowRightDoubleLine } from "react-icons/ri";
 
@@ -32,18 +32,15 @@ function Doing({doing, completeTodo, removeTodo, updateTodo, doingTodo,doneTodo}
         {doing.text}
       </div>
       <div className='icons'>
-        <RiCloseCircleLine
-          onClick={() => doneTodo(doing.id)}
+        <RiCheckDoubleFill
+          onClick={() => doneTodo(doing.id,index,"doing")}
           className='delete-icon'
         />
         <TiEdit
           onClick={() => setEdit({ id: doing.id, value: doing.text })}
           className='edit-icon'
         />
-        <RiArrowRightDoubleLine
-          onClick={() => doingTodo(doing.id)}
-         />
-        
+       
       </div>
      
     </div>

@@ -37,7 +37,7 @@ const Todo = ({ todos, completeTodo, removeTodo, updateTodo, doingTodo,doneTodo}
           className='edit-icon'
         />
         <RiCheckDoubleFill
-          onClick={() => doneTodo(todo.id)}
+          onClick={() => doneTodo(todo.id,index,"todos")}
           className='delete-icon'
         />
         <RiArrowRightDoubleLine

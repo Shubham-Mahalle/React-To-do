@@ -52,13 +52,28 @@ function TodoList() {
       setDoing([taskToMove, ...doing]);
     }
   };
-  const doneTodo = id =>{
-    const taskTOMovedone = todos.find(todo=> todo.id === id);
-    if(taskTOMovedone){
-      const todoDone = todos.filter(todo=> todo.id !== id);
-      setTodos(todoDone);
-      setDone([taskTOMovedone,...done]);
+  const doneTodo = (id,index,arrayType) =>{
+    let taskToMove;
+    let newArray;
+    if (arrayType === 'todos') {
+      taskToMove = todos.find(todo => todo.id === id);
+      newArray = todos.filter(todo => todo.id !== id);
+      setTodos(newArray);
+    } else if (arrayType === 'doing') {
+      taskToMove = doing.find(todo => todo.id === id);
+      newArray = doing.filter(todo => todo.id !== id);
+      setDoing(newArray);
+    } else {
+      return;
     }
+    
+    if (taskToMove) {
+      setDone([taskToMove, ...done]);
+    }
+  }
+  const deleteTodo = id =>{
+     const newTodos = done.filter(todo=>todo.id !== id);
+     setDone(newTodos);
   }
   return (
     <>
@@ -93,7 +108,9 @@ function TodoList() {
           removeTodo={removeTodo}
           updateTodo={updateTodo}
           doingTodo={doingTodo}
-          doneTodo={doneTodo}/>
+          doneTodo={doneTodo}
+          deleteTodo={deleteTodo}
+          />
       </div>
  </div>
       

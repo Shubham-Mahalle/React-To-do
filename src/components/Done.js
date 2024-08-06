@@ -2,9 +2,9 @@ import React,{useState} from 'react'
 import TodoForm from './TodoForm';
 import { RiCloseCircleLine } from 'react-icons/ri';
 import { TiEdit } from 'react-icons/ti';
-import { RiArrowRightDoubleLine } from "react-icons/ri";
+import { MdDeleteForever } from "react-icons/md";
 
-function Done({done, completeTodo, removeTodo, updateTodo, doingTodo,doneTodo}) {
+function Done({done, completeTodo, removeTodo, updateTodo, doingTodo,doneTodo,deleteTodo}) {
     const [edit, setEdit] = useState({
         id: null,
         value: ''
@@ -21,7 +21,9 @@ function Done({done, completeTodo, removeTodo, updateTodo, doingTodo,doneTodo}) 
       if (edit.id) {
         return <TodoForm edit={edit} onSubmit={submitUpdate} />;
       }
-    return done.map((done, index) => (
+    return (
+      <div>
+        {done.map((done, index) => (
         <div
           className={done.isComplete ? 'todo-row complete' : 'todo-row'}
           key={index}
@@ -31,21 +33,22 @@ function Done({done, completeTodo, removeTodo, updateTodo, doingTodo,doneTodo}) 
           </div>
           <div className='icons'>
             <RiCloseCircleLine
-              onClick={() => removeTodo(done.id)}
+              onClick={() => deleteTodo(done.id)}
               className='delete-icon'
             />
             <TiEdit
               onClick={() => setEdit({ id: done.id, value: done.text })}
               className='edit-icon'
             />
-            <RiArrowRightDoubleLine
-              onClick={() => doneTodo(done.id)}
-             />
-            
           </div>
          
         </div>
-      ));
+      )) }
+      <div className='delbtn'>
+      <MdDeleteForever />
+      </div>
+      </div>
+    );
 }
 
 export default Done
